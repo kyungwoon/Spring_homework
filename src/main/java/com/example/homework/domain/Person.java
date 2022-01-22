@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor // 기본생성자를 대신 생성해줍니다.
 @Entity // 테이블임을 나타냅니다.
 
-public class Person {
+public class Person extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // 자동 증가 명령입니다.
@@ -27,6 +27,16 @@ public class Person {
     public Person(String name, String address) {
         this.name = name;
         this.address = address;
+
+    }
+    public void update(PersonRequestDto requestDto) {
+        this.name = requestDto.getName();
+        this.address = requestDto.getAddress();
+    }
+
+    public Person(PersonRequestDto requestDto){
+        this.name = requestDto.getName();
+        this.address = requestDto.getAddress();
 
     }
 
