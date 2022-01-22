@@ -3,11 +3,9 @@ package com.example.homework.controller;
 import com.example.homework.domain.Person;
 import com.example.homework.domain.PersonRepository;
 import com.example.homework.domain.PersonRequestDto;
+import com.example.homework.service.PersonService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 public class PersonController {
 
     private final PersonRepository personRepository;
+    private final PersonService personService;
 
 
     // PostMapping을 통해서, 같은 주소라도 방식이 다름을 구분합니다.
@@ -35,6 +34,11 @@ public class PersonController {
     @GetMapping("/api/persons")
     public List<Person> getPersons() {
         return personRepository.findAll();
+    }
+
+    @PutMapping("/api/persons/{id}")
+    public Long updatePerson(@PathVariable Long id, @RequestBody PersonRequestDto requestDto) {
+        return personService.update(id, requestDto);
     }
 
 
